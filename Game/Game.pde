@@ -4,7 +4,11 @@ LED[] leds;
 
 int currentLED;
 int millisOffset;
+
+//speed of the main animation (in milliseconds)
 float speed;
+
+//direction of the speed animation (-1 makes the animation start going to the left while 1 makes it start to the right)
 int direction;
 
 float score;
@@ -18,13 +22,15 @@ void setup() {
   fullScreen();
 
   leds = new LED[7];
-  leds[0] = new LED(21, 10);
-  leds[1] = new LED(20, 20);
-  leds[2] = new LED(26, 30);
-  leds[3] = new LED(16, 50);
-  leds[4] = new LED(19, 30);
-  leds[5] = new LED(13, 20);
-  leds[6] = new LED(12, 10);
+
+  //the first parameter specifies the GPIO pin you're connecting the LED to. the right one specifies the value of it.
+  leds[0] = new LED(17, 0);
+  leds[1] = new LED(18, 0);
+  leds[2] = new LED(27, 1);
+  leds[3] = new LED(22, 5);
+  leds[4] = new LED(23, 1);
+  leds[5] = new LED(24, 0);
+  leds[6] = new LED(25, 0);
 
   noCursor();
 
@@ -83,7 +89,7 @@ private void prepareExitHandler () {
   Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
     public void run () {
       for (int i = 0; i < leds.length; i++)
-      leds[i].off();
+        leds[i].off();
     }
   }
   ));
