@@ -1,26 +1,7 @@
-<style>
-	td {
-		background-color: white;
-		padding: 5% !important;
-	}
-
-	.step-image {
-		text-align: center;
-		padding: 2%;
-	}
-
-	.step-image > img {
-		width: 100%;
-		height: auto;
-	}
-
-	thead {
-		display: none;
-	}
-</style>
+<div id="page">
 
 # Bop It! Pi
-## [[en](#en)-[pt](#pt)]
+# [[en](#en)-[pt](#pt)]
 
 <div id="en">
 
@@ -63,15 +44,24 @@ __\*\*__ The LEDs don't need to necessarily be red, green, yellow and blue. The 
 ### How to build it:
 _Circuit images made with [Fritzing](http://fritzing.org/home/)_
 
-| <!-- --> | <!-- --> |
-|----------|-------|
-| __1.__ Simetrically place the LEDs on the bottom side of your breadboard with their anode legs (the short ones) to the right.| <div class="step-image"><a href="Circuit/Step1.png"><img alt="Explanatory image for step 1" src="Circuit/Step1.png"></img></a></div> |
-| __2.__ Using a male to female jumper wire, make a connection between any ground pin on your Raspberry Pi and the negative (blue) column on your breadboard.| <div class="step-image"><a href="Circuit/Step2.png"><img alt="Explanatory image for step 2" src="Circuit/Step2.png"></img></a></div> |
-| __3.__ Use male to male wires to connect the anode legs (the ones on the right) of the LEDs to the negative column of the breadboard.| <div class="step-image"><a href="Circuit/Step3.png"><img alt="Explanatory image for step 3" src="Circuit/Step3.png"></img></a></div> |
-| __4.__ Use all of the 7 resistors to connect the cathode legs (the ones on the left) of the LEDs to any hole on the line on top of the one where your LED cathode is connected to on your breadboard.| <div class="step-image"><a href="Circuit/Step4.png"><img alt="Explanatory image for step 4" src="Circuit/Step4.png"></img></a></div> |
-| __5.__  On the same lines, connect the resistors to your Raspberry Pi in the following order (go from the extreme left resistor to the extreme right one): <ul><li>GPIO17 (pin 11)</li> <li>GPIO18 (pin 12)</li> <li>GPIO27 (pin 13)</li> <li>GPIO22 (pin 15)</li> <li>GPIO23 (pin 16)</li> <li>GPIO24 (pin 18)</li> <li>GPIO25 (pin 22)</li></ul>| <div class="step-image"><a href="Circuit/Step5.png"><img alt="Explanatory image for step 5" src="Circuit/Step5.png"></img></a></div> |
-| __6.__  Once you have the Processing code on your computer, make sure you've [installed Processing for Pi](https://pi.processing.org/reference/) and run the files for the game itself. Alternatively, if you don't want to edit the code anytime soon, you can run the exported application available [here](https://github.com/joogps/Bop-It-Pi/tree/master/Game/application.linux-armv6hf) without needing to install Processing itself.| <div class="step-image"><a href="Circuit/Step6.png"><img alt="Explanatory image for step 6" src="Circuit/Step6.png"></img></a></div>   |
-| __7.__  It's done! Congratulations! Enjoy it a lot and feel free to [make a question](https://github.com/joogps/Bop-It-Pi/issues/new) and to help me develop this project even more! | <div class="step-image"><a href="Circuit/Step7.jpg"><img alt="Explanatory image for step 7" src="Circuit/Step7.jpg"></img></a></div>  |
+<table> 
+	<tr> <td style="padding: 3%"> <b>1.</b> Simetrically place the LEDs on the bottom side of your breadboard with their anode legs (the short ones) to the right. </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step1.png"><img src="Circuit/Step1.png" alt="Explanatory image for step 1"></img></a> </td> </tr>
+	<tr style="background-color: white"> <td style="padding: 3%"> <b>2.</b> Using a male to female jumper wire, make a connection between any ground pin on your Raspberry Pi and the negative (blue) column on your breadboard. </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step2.png"><img src="Circuit/Step2.png" alt="Explanatory image for step 2"></img></a> </td> </tr>
+	<tr> <td style="padding: 3%"> <b>3.</b> Use male to male wires to connect the anode legs (the ones on the right) of the LEDs to the negative column of the breadboard. </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step3.png"><img src="Circuit/Step3.png" alt="Explanatory image for step 3"></img></a> </td> </tr>
+	<tr style="background-color: white"> <td style="padding: 3%"> <b>4.</b> Use all of the 7 resistors to connect the cathode legs (the ones on the left) of the LEDs to any hole on the line on top of the one where your LED cathode is connected to on your breadboard. </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step4.png"><img src="Circuit/Step4.png" alt="Explanatory image for step 4"></img></a> </td> </tr>
+	<tr> <td style="padding: 3%"> <b>5.</b> On the same lines, connect the resistors to your Raspberry Pi in the following order (go from the extreme left resistor to the extreme right one): 
+		<ul>
+			<li>GPIO17 (pin 11)</li>
+			<li>GPIO18 (pin 12)</li>
+			<li>GPIO27 (pin 13)</li>
+			<li>GPIO22 (pin 15)</li>
+			<li>GPIO23 (pin 16)</li>
+			<li>GPIO24 (pin 18)</li>
+			<li>GPIO25 (pin 22)</li>
+		</ul> </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step5.png"><img src="Circuit/Step5.png" alt="Explanatory image for step 5"></img></a> </td> </tr>
+	<tr style="background-color: white"> <td style="padding: 3%"> <b>6.</b>  Once you have the Processing code on your computer, make sure you've <a href="https://pi.processing.org/download/">installed Processing for Pi</a> and run the files for the game itself. Alternatively, if you don't want to edit the code anytime soon, you can run the exported application available <a href="https://github.com/joogps/Bop-It-Pi/tree/master/Game/application.linux-armv6hf">here</a> without needing to install Processing itself. </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step6.png"><img src="Circuit/Step6.png" alt="Processing for Pi download page"></img></a> </td> </tr>
+	<tr> <td style="padding: 3%"> <b>7.</b> It's done! Congratulations you did it! I hope you enjoy it! Feel free to <a href="https://github.com/joogps/Bop-It-Pi/issues/new">make a question</a> and to help me develop this project even more! </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step7.jpg"><img src="Circuit/Step7.jpg" alt="Image a physical build of the circuit"></img></a> </td> </tr>
+</table>
 
 </div>
 
@@ -126,15 +116,25 @@ __\*\*__ Os LEDs não precisam, necessariamente, ser vermelhos, verdes, amarelos
 <div id="pt-materials">
 
 ### Como montar:
-| <!-- --> | <!-- --> |
-|----------|-------|
-| __1.__ Simetricamente posicionar os LEDs na parte inferior de sua protoboard com as 'pernas' de anodo (as mais curtas) em sua direita | <div class="step-image"><a href="Circuit/Step1.png"><img alt="Imagem explicativa para o passo 1" src="Circuit/Step1.png"></img></a></div> |
-| __2.__ Usando um cabo jumper macho/fêmea, faça uma conexão entre qualquer pino terra (GND) em seu Raspberry Pi e a coluna negativa (azul) na protoboard.| <div class="step-image"><a href="Circuit/Step2.png"><img alt="Imagem explicativa para o passo 2" src="Circuit/Step2.png"></img></a></div> |
-| __3.__ Use cabos macho/macho para conectar as 'pernas' de anodo (as da direita) dos LEDs com a coluna negativa de sue Protoboard.| <div class="step-image"><a href="Circuit/Step3.png"><img alt="Imagem explicativa para o passo 3" src="Circuit/Step3.png"></img></a></div> |
-| __4.__ Use todos os 7 resistores para conectar as pernas de catodo (as da direita) dos LEDs com algum buraco da linha acima da qual o catodo de seu LED está posicionado em sua protoboard.| <div class="step-image"><a href="Circuit/Step4.png"><img alt="Imagem explicativa para o passo 4" src="Circuit/Step4.png"></img></a></div> |
-| __5.__  Conecte os resistores ao seu Raspberry Pi nos seguintes pinos (vá para o resistor da extrema esquerda para o da extrema direita): <ul><li>GPIO17 (pin 11)</li> <li>GPIO18 (pin 12)</li> <li>GPIO27 (pin 13)</li> <li>GPIO22 (pin 15)</li> <li>GPIO23 (pin 16)</li> <li>GPIO24 (pin 18)</li> <li>GPIO25 (pin 22)</li></ul> | <div class="step-image"><a href="Circuit/Step5.png"><img alt="Imagem explicativa para o passo 5" src="Circuit/Step5.png"></img></a></div> |
-| __6.__  Assim que você tiver o código em Processing no seu computador, certfique-se de que você tem o [Processing for Pi instalado](https://pi.processing.org/reference/) e execute os arquivos do jogo. and run the files from the repository. Caso você não queira editar o código provido pelo repositório posteriormente, você pode simplesmente executar a aplicação exportada disponível [aqui](https://github.com/joogps/Bop-It-Pi/tree/master/Game/application.linux-armv6hf) sem ter que instalar o Processing em si. | <div class="step-image"><a href="Circuit/Step6.png"><img alt="Imagem explicativa para o passo 6" src="Circuit/Step6.png"></img></a></div>   |
-| __7.__  Está pronto! Parabéns! Aproveite bastante e sinta-se livre para [fazer perguntas ou reportar problemas](https://github.com/joogps/Bop-It-Pi/issues/new) e me ajudar a desenvolver ainda mais esse projeto! | <div class="step-image"><a href="Circuit/Step7.jpg"><img alt="Imagem explicativa para o passo 7" src="Circuit/Step7.jpg"></img></a></div>  |
+
+<table> 
+	<tr> <td style="padding: 3%"> <b>1.</b> Simetricamente posicionar os LEDs na parte inferior de sua protoboard com as 'pernas' de anodo (as mais curtas) em sua direita </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step1.png"><img src="Circuit/Step1.png" alt="Explanatory image for step 1"></img></a> </td> </tr>
+	<tr style="background-color: white"> <td style="padding: 3%"> <b>2.</b> Usando um cabo jumper macho/fêmea, faça uma conexão entre qualquer pino terra (GND) em seu Raspberry Pi e a coluna negativa (azul) na protoboard. </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step2.png"><img src="Circuit/Step2.png" alt="Explanatory image for step 2"></img></a> </td> </tr>
+	<tr> <td style="padding: 3%"> <b>3.</b> Use cabos macho/macho para conectar as 'pernas' de anodo (as da direita) dos LEDs com a coluna negativa de sue Protoboard. </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step3.png"><img src="Circuit/Step3.png" alt="Explanatory image for step 3"></img></a> </td> </tr>
+	<tr style="background-color: white"> <td style="padding: 3%"> <b>4.</b> Use todos os 7 resistores para conectar as pernas de catodo (as da direita) dos LEDs com algum buraco da linha acima da qual o catodo de seu LED está posicionado em sua protoboard. </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step4.png"><img src="Circuit/Step4.png" alt="Explanatory image for step 4"></img></a> </td> </tr>
+	<tr> <td style="padding: 3%"> <b>5.</b> Conecte os resistores ao seu Raspberry Pi nos seguintes pinos (vá do resistor da extrema esquerda para o da extrema direita): 
+		<ul>
+			<li>GPIO17 (pino 11)</li>
+			<li>GPIO18 (pino 12)</li>
+			<li>GPIO27 (pino 13)</li>
+			<li>GPIO22 (pino 15)</li>
+			<li>GPIO23 (pino 16)</li>
+			<li>GPIO24 (pino 18)</li>
+			<li>GPIO25 (pino 22)</li>
+		</ul> </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step5.png"><img src="Circuit/Step5.png" alt="Explanatory image for step 5"></img></a> </td> </tr>
+	<tr style="background-color: white"> <td style="padding: 3%"> <b>6.</b> Assim que você tiver o código em Processing no seu computador, certfique-se de que você tem o <a href="https://pi.processing.org/download/">Processing for Pi instalado</a> e execute os arquivos do jogo. Caso você não queira editar o código provido pelo repositório posteriormente, você pode simplesmente executar a aplicação exportada disponível <a href="https://github.com/joogps/Bop-It-Pi/tree/master/Game/application.linux-armv6hf">aqui</a> sem ter que instalar o Processing em si. </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step6.png"><img src="Circuit/Step6.png" alt="Processing for Pi download page"></img></a> </td> </tr>
+	<tr> <td style="padding: 3%"> <b>7.</b> Está pronto! Parabéns, você conseguiu! Espero que você aproveite muito! Sinta-se livre para <a href="https://github.com/joogps/Bop-It-Pi/issues/new">fazer perguntas ou reportar problemas</a> e me ajudar a desenvolver ainda mais esse projeto! </td> <td width="50%" height="auto" style="padding: 3%"><a href="Circuit/Step7.jpg"><img src="Circuit/Step7.jpg" alt="Image a physical build of the circuit"></img></a> </td> </tr>
+</table>
 
 </div>
 
@@ -148,4 +148,7 @@ __\*\*__ Os LEDs não precisam, necessariamente, ser vermelhos, verdes, amarelos
 
 </div>
 
+</div>
+
+## [Back to top / Voltar ao início](#page)
 </div>
