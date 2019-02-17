@@ -23,4 +23,8 @@ class LED {
     GPIO.pinMode(GPIOPin, GPIO.OUTPUT);
     return state;
   }
+  
+  void exit() {
+    GPIO.releasePin(GPIOPin);
+  }
 }

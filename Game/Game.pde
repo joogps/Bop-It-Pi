@@ -13,6 +13,8 @@ float speed;
 // direção da animação principal (-1 faz a animação começar indo para a esquerda, já 1 faz a a animação começar indo pra direita)
 int direction;
 
+boolean canCatch;
+
 float score;
 int goalScore;
 
@@ -24,7 +26,7 @@ int blinkMillisOffset;
 int blinkSpeed;
 
 void setup() {
-  fullScreen();
+  size(900, 400);
 
   // here's where you can add, edit or remove the GPIO pins to which the LEDs are connected
   // the first parameter specifies the GPIO pin the LED is connected to, while the right one specifies the value of it
@@ -48,27 +50,37 @@ void setup() {
     leds[i].off();
 
   // starting position is selected randomly
+  // posição inicial selecionada aleatoriamente
   currentLED = round(random(leds.length-1));
 
-  // starting position is turned on
+  // starting LED is turned on
+  // LED inicial é ligado
   leds[currentLED].on();
 
   // speed is set to 5 LEDs per second
+  // velocidade é setada para 5 LEDs por segundo
   speed = 1000/5;
 
-  //direction is randomly set. the extra code avoids the program to use an invalid index on the leds array
+  // direction is randomly set. the extra code avoids the program to use an invalid index on the leds array
+  // direcao setada aleatoriamente. o código extra impede que o programa use um índice inválido no array leds
   direction = currentLED == 0 ? 1 : currentLED == leds.length-1 ? -1 : random(1) < 0.5 ? 1 : -1;
 
-  // catch animation speed is sset to 2 blinks per second
+  // since the variable is set to true, the user will be able to catch the ball as soon as the program starts (it is also automatically set to true if the main animation is running and there are no keys being pressed)
+  // já que a variável está setada para true, o usuário poderá pegar a bola assim que o programa começar (é também automaticamente setada para verdadeiro se a animação principal está sendo executada e nenhuma tecla está sendo pressionada)
+  canCatch = true;
+
+  // catch animation speed is set to 2 blinks per second
+  // velocidade da animação de captura é setada para 2 pisques por segundo
   blinkSpeed = 500;
 
   // this function makes the LEDs turn off if the application gets closed
+  // esta função faz com que todos os LEDs desliguem ao fechar do programa
   prepareExitHandler();
 }
 
 void draw() {
   background(0);
-  
+
   textAlign(CENTER, CENTER);
   textSize(height/2);
   text(round(score), width/2, height/2-textDescent()/2);
@@ -86,22 +98,29 @@ void draw() {
 
       blinkMillisOffset = millis();
     }
-  } else if (millis()-millisOffset > speed) {
-    leds[currentLED].off();
-    currentLED+= direction;
-    leds[currentLED].on();
+  } else {
+    if (millis()-millisOffset > speed) {
+      leds[currentLED].off();
+      currentLED+= direction;
+      leds[currentLED].on();
 
-    if (currentLED == 0 || currentLED == leds.length-1)
-      direction*= -1;
+      if (currentLED == 0 || currentLED == leds.length-1)
+        direction*= -1;
 
-    millisOffset = millis();
+      millisOffset = millis();
+    }
+
+    if (!keyPressed)
+      canCatch = true;
   }
 }
 
 void keyPressed() {
-  if (blink == 0) {
+  if (canCatch) {
     blink = 4;
     goalScore+= leds[currentLED].value;
+
+    canCatch = false;
   }
 }
 
@@ -109,7 +128,7 @@ private void prepareExitHandler () {
   Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
     public void run () {
       for (int i = 0; i < leds.length; i++)
-        leds[i].off();
+      leds[i].exit();
     }
   }
   ));
