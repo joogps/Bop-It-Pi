@@ -2,6 +2,10 @@ import processing.io.*;
 
 LED[] leds;
 
+Button[] buttons;
+
+ArrayList<String> keys;
+
 int currentLED;
 int millisOffset;
 
@@ -44,7 +48,11 @@ void setup() {
   leds[5] = new LED(24, 0);
   leds[6] = new LED(25, 0);
 
-  noCursor();
+  buttons = new Button[2];
+  buttons[0] = new Button(4);
+  buttons[1] = new Button(5);
+
+  keys = new ArrayList<String>();
 
   for (int i = 0; i < leds.length; i++)
     leds[i].off();
@@ -76,6 +84,9 @@ void setup() {
   // this function makes the LEDs turn off if the application gets closed
   // esta função faz com que todos os LEDs desliguem ao fechar do programa
   prepareExitHandler();
+
+
+  noCursor();
 }
 
 void draw() {
@@ -110,18 +121,42 @@ void draw() {
       millisOffset = millis();
     }
 
-    if (!keyPressed)
+    boolean noButtonsBeingPressed = true;
+    for (int i = 0; i < buttons.length; i++)
+      noButtonsBeingPressed = noButtonsBeingPressed && buttons[i].state() == 0;
+
+    if (keys.size() <= 2 && noButtonsBeingPressed)
       canCatch = true;
   }
-}
 
-void keyPressed() {
-  if (canCatch) {
+  boolean allButtonsBeingPressed = true;
+  for (int i = 0; i < buttons.length; i++)
+    allButtonsBeingPressed = allButtonsBeingPressed && buttons[i].state() == 1;
+
+  if (canCatch && (allButtonsBeingPressed || keys.size() >= 2)) {
     blink = 4;
     goalScore+= leds[currentLED].value;
 
     canCatch = false;
   }
+}
+
+void keyPressed() {
+  String addStr = key == CODED ? str(keyCode) : Character.toString(key);
+  for (String str : keys)
+    if (addStr.equals(str)) {
+      println(true);
+      addStr = null;
+      break;
+    }
+
+  if (addStr != null)
+    keys.add(addStr);
+}
+
+void keyReleased() {
+  String remStr = key == CODED ? str(keyCode) : Character.toString(key);
+  keys.remove(remStr);
 }
 
 private void prepareExitHandler () {
