@@ -137,6 +137,8 @@ void draw() {
     blink = 4;
     goalScore+= leds[currentLED].value;
 
+    speed*= 1.1;
+
     canCatch = false;
   }
 }
@@ -145,7 +147,6 @@ void keyPressed() {
   String addStr = key == CODED ? str(keyCode) : Character.toString(key);
   for (String str : keys)
     if (addStr.equals(str)) {
-      println(true);
       addStr = null;
       break;
     }
