@@ -1,12 +1,14 @@
 class LED {
   int GPIOPin; 
   int value;
+  int livesChange;
 
-  LED(int p, int v) {
+  LED(int p, int v, int l) {
     GPIOPin = p;
-    value = v;
-
     GPIO.pinMode(GPIOPin, GPIO.OUTPUT);
+
+    value = v;
+    livesChange = l;
   }
 
   void on() {
@@ -23,7 +25,7 @@ class LED {
     GPIO.pinMode(GPIOPin, GPIO.OUTPUT);
     return state;
   }
-  
+
   void exit() {
     GPIO.releasePin(GPIOPin);
   }
