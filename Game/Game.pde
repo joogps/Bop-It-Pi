@@ -30,7 +30,7 @@ int blinkMillisOffset;
 int blinkSpeed;
 
 int lives;
-int blinklives;
+int blinkLives;
 int blinkLivesMillisOffset;
 int blinkLivesSpeed;
 
@@ -88,6 +88,8 @@ void setup() {
 
   lives = 3;
 
+  blinkLivesSpeed = 500;
+
   // this function makes the LEDs turn off if the application gets closed
   // esta função faz com que todos os LEDs desliguem ao fechar do programa
   prepareExitHandler();
@@ -98,7 +100,7 @@ void setup() {
 void draw() {
   background(0);
 
-  if (lives > 0) {
+  if (lives > 0 || blink+1 > 0 || blinkLives+1 > 0) {
     fill(255);
     textAlign(LEFT, TOP);
     textSize(1);
@@ -110,122 +112,129 @@ void draw() {
     float size = min(width/10.0, height/10.0);
     fill(255, 0, 0);
     noStroke();
-    for (int l = 0; l < lives; l++)
+    for (int l = 0; l < lives+(((blinkLives+1 > 0 && leds[lives].state() == 1) || blink+1 > 0) ? 1 : 0); l++)
       ellipse(width*7/32.0+size/2.0+l*size*1.2, height*7/8.0-textDescent()/2.0-size/2, size, size);
 
-    if (blink > 0) {
+    if (blink+1 > 0) {
       if (millis()-blinkMillisOffset > blinkSpeed) {
         if (leds[currentLED].state() == 1) {
           leds[currentLED].off();
-        }
-        else {
-          if (leds[currentLED].state() == 1)
-            leds[currentLED].on();
+        } else {
+          leds[currentLED].on();
           blink-= 1;
         }
 
         blinkMillisOffset = millis();
       }
-    } 
-    else if (blinkLives > 0){
+    } else if (blinkLives+1 > 0) {
+      if (blinkLives >= lives+1) {
+        for (int i = 0; i < leds.length; i++) {
+          if (i < lives)
+            leds[i].on();
+          else
+            leds[i].off();
+        }
+      }
+
       if (millis()-blinkLivesMillisOffset > blinkLivesSpeed) {
-        if (leds[lives+1].state() == 1)
-          if(lives < lives.length)
-            leds[lives+1].off();
-          else {
-            if(lives < lives.length)
-              leds[lives+1].on();
-            blink-= 1;
-          }
-
-          blinkMillisOffset = millis();
-        }
-      }
-      else {
-        if (millis()-millisOffset > speed) {
-          leds[currentLED].off();
-          currentLED+= direction;
-          leds[currentLED].on();
-
-          if (currentLED == 0 || currentLED == leds.length-1)
-            direction*= -1;
-
-          millisOffset = millis();
+        if (leds[lives].state() == 1)
+          leds[lives].off();
+        else {
+          leds[lives].on();
+          blinkLives--;
         }
 
-        boolean noButtonsBeingPressed = true;
-        for (int i = 0; i < buttons.length; i++)
-          noButtonsBeingPressed = noButtonsBeingPressed && buttons[i].state() == 0;
+        blinkLivesMillisOffset = millis();
 
-        if (keys.size() <= 2 && noButtonsBeingPressed)
-          canCatch = true;
+        if (blinkLives+1 == 0) {
+          for (int i = 0; i < leds.length; i++)
+            leds[i].off();
+        }
+      }
+    } else {
+      if (millis()-millisOffset > speed) {
+        leds[currentLED].off();
+        currentLED+= direction;
+        leds[currentLED].on();
+
+        if (currentLED == 0 || currentLED == leds.length-1)
+          direction*= -1;
+
+        millisOffset = millis();
       }
 
-      boolean allButtonsBeingPressed = true;
+      boolean noButtonsBeingPressed = true;
       for (int i = 0; i < buttons.length; i++)
-        allButtonsBeingPressed = allButtonsBeingPressed && buttons[i].state() == 1;
+        noButtonsBeingPressed = noButtonsBeingPressed && buttons[i].state() == 0;
 
-      if (canCatch && (allButtonsBeingPressed || keys.size() >= 2)) {
-        blink = 4;
-        goalScore+= leds[currentLED].value;
-
-        speed*= 1.1;
-
-        if ((leds[currentLED].livesChange == 1 && lives < 3) || leds[currentLED].livesChange == -1){
-          lives+= leds[currentLED].livesChange;
-          blinkLives = 3;
-
-          for (int i = 0; i < leds.length; i++) {
-            if(i < lives)
-              leds[i].off();
-            else
-              leds[i].on();
-          }
-        }
-
-        if (lives == 0)
-          for (led of leds) {
-            led.exit();
-          }
-
-          canCatch = false;
-        }
-      } else {
-        fill(255);
-        textAlign(CENTER, CENTER);
-        textSize(1);
-        textSize(min(width*4/5.0/textWidth("GAME OVER"), height/2.0));
-        text("GAME OVER", width/2.0, height/2.0-textDescent()/2.0);
-      }
+      if (keys.size() <= 2 && noButtonsBeingPressed)
+        canCatch = true;
     }
 
-    void keyPressed() {
-      String addStr = key == CODED ? str(keyCode) : Character.toString(key);
-      for (String str : keys)
-        if (addStr.equals(str)) {
-          addStr = null;
-          break;
-        }
+    boolean allButtonsBeingPressed = true;
+    for (int i = 0; i < buttons.length; i++)
+      allButtonsBeingPressed = allButtonsBeingPressed && buttons[i].state() == 1;
 
-        if (addStr != null)
-          keys.add(addStr);
+    if (canCatch && (allButtonsBeingPressed || keys.size() >= 2)) {
+      blink = 3;
+      goalScore+= leds[currentLED].value;
+
+      speed*= 1.1;
+
+      if ((leds[currentLED].livesChange == 1 && lives < 3) || leds[currentLED].livesChange == -1) {
+        lives+= leds[currentLED].livesChange;
+
+        if (lives < leds.length)
+          blinkLives = lives+2;
       }
 
-      void keyReleased() {
-        if(lives > 0) {
-          String remStr = key == CODED ? str(keyCode) : Character.toString(key);
-          keys.remove(remStr);
-        }
-        else 
-          setup();
-      }
+      if (lives == 0)
+        for (int i = 0; i < leds.length; i++)
+          leds[i].exit();
 
-      private void prepareExitHandler () {
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-          public void run () {
-            for (int i = 0; i < leds.length; i++)
-              leds[i].exit();
-          }
-        }
-        ));
-      }
+      canCatch = false;
+    }
+  } else {
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(1);
+    float size = min(width*4/5.0/textWidth("GAME OVER"), height/2.0);
+    float size2 = min(width/5.0/textWidth(str(round(score))), height/5.0);
+
+    textSize(size);
+    text("GAME OVER", width/2.0, height/2.0-textDescent()/2.0-size2/2.0);
+
+    textSize(size2);
+    text(round(score), width/2.0, height/2.0-textDescent()/2.0+size/2.0);
+  }
+}
+
+void keyPressed() {
+  String addStr = key == CODED ? str(keyCode) : Character.toString(key);
+  for (String str : keys)
+    if (addStr.equals(str)) {
+      addStr = null;
+      break;
+    }
+
+  if (addStr != null)
+    keys.add(addStr);
+}
+
+void keyReleased() {
+  if (lives > 0) {
+    String remStr = key == CODED ? str(keyCode) : Character.toString(key);
+    keys.remove(remStr);
+  } else if (canCatch)
+    setup();
+}
+
+private void prepareExitHandler () {
+  Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+    public void run () {
+      for (int i = 0; i < leds.length; i++)
+      leds[i].exit();
+    }
+  }
+  ));
+}
