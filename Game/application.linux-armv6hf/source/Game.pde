@@ -30,6 +30,9 @@ int blinkMillisOffset;
 int blinkSpeed;
 
 int lives;
+int blinkLives;
+int blinkLivesMillisOffset;
+int blinkLivesSpeed;
 
 void setup() {
   size(900, 400);
@@ -85,6 +88,8 @@ void setup() {
 
   lives = 3;
 
+  blinkLivesSpeed = 500;
+
   // this function makes the LEDs turn off if the application gets closed
   // esta função faz com que todos os LEDs desliguem ao fechar do programa
   prepareExitHandler();
@@ -95,7 +100,7 @@ void setup() {
 void draw() {
   background(0);
 
-  if (lives > 0) {
+  if (lives > 0 || blink+1 > 0 || blinkLives+1 > 0) {
     fill(255);
     textAlign(LEFT, TOP);
     textSize(1);
@@ -107,19 +112,44 @@ void draw() {
     float size = min(width/10.0, height/10.0);
     fill(255, 0, 0);
     noStroke();
-    for (int l = 0; l < lives; l++)
+    for (int l = 0; l < lives+(((blinkLives+1 > 0 && leds[lives].state() == 1) || blink+1 > 0) ? 1 : 0); l++)
       ellipse(width*7/32.0+size/2.0+l*size*1.2, height*7/8.0-textDescent()/2.0-size/2, size, size);
 
-    if (blink > 0) {
+    if (blink+1 > 0) {
       if (millis()-blinkMillisOffset > blinkSpeed) {
-        if (leds[currentLED].state() == 1)
+        if (leds[currentLED].state() == 1) {
           leds[currentLED].off();
-        else {
+        } else {
           leds[currentLED].on();
           blink-= 1;
         }
 
         blinkMillisOffset = millis();
+      }
+    } else if (blinkLives+1 > 0) {
+      if (blinkLives >= lives+1) {
+        for (int i = 0; i < leds.length; i++) {
+          if (i < lives)
+            leds[i].on();
+          else
+            leds[i].off();
+        }
+      }
+
+      if (millis()-blinkLivesMillisOffset > blinkLivesSpeed) {
+        if (leds[lives].state() == 1)
+          leds[lives].off();
+        else {
+          leds[lives].on();
+          blinkLives--;
+        }
+
+        blinkLivesMillisOffset = millis();
+
+        if (blinkLives+1 == 0) {
+          for (int i = 0; i < leds.length; i++)
+            leds[i].off();
+        }
       }
     } else {
       if (millis()-millisOffset > speed) {
@@ -146,13 +176,17 @@ void draw() {
       allButtonsBeingPressed = allButtonsBeingPressed && buttons[i].state() == 1;
 
     if (canCatch && (allButtonsBeingPressed || keys.size() >= 2)) {
-      blink = 4;
+      blink = 3;
       goalScore+= leds[currentLED].value;
 
       speed*= 1.1;
 
-      if ((leds[currentLED].livesChange == 1 && lives < 3) || leds[currentLED].livesChange == -1)
+      if ((leds[currentLED].livesChange == 1 && lives < 3) || leds[currentLED].livesChange == -1) {
         lives+= leds[currentLED].livesChange;
+
+        if (lives < leds.length)
+          blinkLives = lives+2;
+      }
 
       if (lives == 0)
         for (int i = 0; i < leds.length; i++)
@@ -164,8 +198,14 @@ void draw() {
     fill(255);
     textAlign(CENTER, CENTER);
     textSize(1);
-    textSize(min(width*4/5.0/textWidth("GAME OVER"), height/2.0));
-    text("GAME OVER", width/2.0, height/2.0-textDescent()/2.0);
+    float size = min(width*4/5.0/textWidth("GAME OVER"), height/2.0);
+    float size2 = min(width/5.0/textWidth(str(round(score))), height/5.0);
+
+    textSize(size);
+    text("GAME OVER", width/2.0, height/2.0-textDescent()/2.0-size2/2.0);
+
+    textSize(size2);
+    text(round(score), width/2.0, height/2.0-textDescent()/2.0+size/2.0);
   }
 }
 
@@ -182,8 +222,11 @@ void keyPressed() {
 }
 
 void keyReleased() {
-  String remStr = key == CODED ? str(keyCode) : Character.toString(key);
-  keys.remove(remStr);
+  if (lives > 0) {
+    String remStr = key == CODED ? str(keyCode) : Character.toString(key);
+    keys.remove(remStr);
+  } else if (canCatch)
+    setup();
 }
 
 private void prepareExitHandler () {
