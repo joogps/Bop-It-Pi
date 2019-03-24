@@ -1,5 +1,6 @@
 class LED {
-  int GPIOPin; 
+  int GPIOPin;
+
   int value;
   int livesChange;
 
@@ -11,14 +12,20 @@ class LED {
     livesChange = l;
   }
 
+  // turns on the LED
+  // liga o LED
   void on() {
     GPIO.digitalWrite(GPIOPin, GPIO.HIGH);
   }
 
+  // turns off the LED
+  // desliga o LED
   void off() {
     GPIO.digitalWrite(GPIOPin, GPIO.LOW);
   }
 
+  // returns the LED's current state
+  // retorna o estado atual do LED
   int state() {
     GPIO.pinMode(GPIOPin, GPIO.INPUT);
     int state = GPIO.digitalRead(GPIOPin);
@@ -26,6 +33,8 @@ class LED {
     return state;
   }
 
+  // removes the LED from the GPIO object
+  // remove o LED do objeto GPIO
   void exit() {
     GPIO.releasePin(GPIOPin);
   }

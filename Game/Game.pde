@@ -1,12 +1,23 @@
 import processing.io.*;
 
+// array that stores all of the LED objects
+// array que guarda todos os objetos LED
 LED[] leds;
 
+// array that stores all of the Button objects
+// array que guarda todos os objetos Button
 Button[] buttons;
 
+// array (ArrayList) that stores the player's keyboard keys that are being pressed
+// array (ArrayList) que guarda as teclas do teclado do usuário que estão sendo pressionadas
 ArrayList<String> keys;
 
+// stores the index of the LED that's currently turned on during the bounce animation
+// guarda o índice do LED que está ligado durante a animação de quique
 int currentLED;
+
+// the time, in milliseconds since the last update on the bounce animation
+// o tempo, em milissegundos, desde a última atualização à animação de quique
 int millisOffset;
 
 // speed of the main animation (in milliseconds)
@@ -17,34 +28,61 @@ float speed;
 // direção da animação principal (-1 faz a animação começar indo para a esquerda, já 1 faz a a animação começar indo pra direita)
 int direction;
 
+// if it's true, than the player can catch the ball using it's keyboard or the push buttons
+// se for verdadeira, então o usuário poderá pegar a bola usando o seu teclado ou os botões
 boolean canCatch;
 
+// score being displayed on screen
+// pontuação que aparece na tela
 float score;
+
+// the value the score variable interpolates with
+// o valor como qual a pontuação irá se interpolar
 int goalScore;
 
+// specifies how many times the LED needs to blink before the blink animation ends
+// especifica quantas vezes o LED precisa piscar antes que a animação de pisque acabe
 int blink;
+
+// the time, in milliseconds since the last update on the blink animation
+// o tempo, em milissegundos, desde a última atualização à animação de pisque
 int blinkMillisOffset;
 
-// speed of the catch animation
-// velocidade da animação de captura
+// speed of the blink animation
+// velocidade da animação de pisque
 int blinkSpeed;
 
+// store the player's lives
+// guardam as vidas do usuário
 int lives;
 int newLives;
+
+// establishes a limit for how many lives the player can have
+// establece um limite na quantidade de vidas que o usuário pode ter
 int lifeLimit;
 
+// specifies how many times the life LED needs to blink before the lives blink animation ends
+// especifica quantas vezes o LED da vida precisa piscar antes que a animação de pisque das vidas acabe
 int blinkLives;
+
+// the time, in milliseconds since the last update on the lives blink animation
+// o tempo, em milissegundos, desde a última atualização à animação de pisque das vidas
 int blinkLivesMillisOffset;
+
+// speed of the lives blink animation
+// velocidade da animação de pisque das vidas
 int blinkLivesSpeed;
 
 void setup() {
-  size(900, 400);
+  // the sketch will run in full screen mode
+  // o sketch vai rodar em modo tela cheia
+  fullScreen();
 
-  // here's where you can add, edit or remove the GPIO pins to which the LEDs are connected
-  // the first parameter specifies the GPIO pin the LED is connected to, while the right one specifies the value of it
+  // here's where you can add, edit or remove LEDs from the leds array
+  // the first parameter specifies the GPIO pin the LED is connected to, the second one specifies the value of it and the third one specifies how many lives it will give the player
 
-  // aqui é onde você pode adicionar, editar ou remover os pinos GPIO nos quais os LEDs estão conectados
-  // o primeiro parâmetro especifica o pino no qual o LED está conectado, já o segundo representa o valor que o ele vale
+  // aqui é onde você pode adicionar, editar ou remover os LEDs do array leds
+  // o primeiro parâmetro especifica o pino GPIO no qual o LED está conectado, o segundo representa o valor que o ele vale e o terceiro especifica quantas vidas ele dará ao usuário
 
   leds = new LED[7];
 
@@ -56,12 +94,23 @@ void setup() {
   leds[5] = new LED(24, 0, -1);
   leds[6] = new LED(25, 0, -1);
 
+  // here's where can add, edit or remove buttons from the buttons array
+  // the first and only parameter specifies the GPIO pin the button is connected to
+
+  // aqui é onde você pode adicionar, editar ou remover botões do array buttons
+  // o primeiro e único parâmetro especifica o pino GPIO onde o botão está conectado 
   buttons = new Button[2];
+
   buttons[0] = new Button(4);
   buttons[1] = new Button(5);
 
+  // keys array (ArrayList) is initialized
+  // array (ArrayList) keys é inicializado
+
   keys = new ArrayList<String>();
 
+  // all LEDs are turned off
+  // todos os LEDs são desligados
   for (int i = 0; i < leds.length; i++)
     leds[i].off();
 
@@ -73,32 +122,35 @@ void setup() {
   // LED inicial é ligado
   leds[currentLED].on();
 
-  // speed is set to 5 LEDs per second
-  // velocidade é setada para 5 LEDs por segundo
   speed = 1000/2.0;
 
   // direction is randomly set. the extra code avoids the program to use an invalid index on the leds array
-  // direcao setada aleatoriamente. o código extra impede que o programa use um índice inválido no array leds
+  // direção definida aleatoriamente. o código extra impede que o programa use um índice inválido no array leds
   direction = currentLED == 0 ? 1 : currentLED == leds.length-1 ? -1 : random(1) < 0.5 ? 1 : -1;
 
-  // since the variable is set to true, the user will be able to catch the ball as soon as the program starts (it is also automatically set to true if the main animation is running and there are no keys being pressed)
-  // já que a variável está setada para true, o usuário poderá pegar a bola assim que o programa começar (é também automaticamente setada para verdadeiro se a animação principal está sendo executada e nenhuma tecla está sendo pressionada)
   canCatch = true;
 
-  // catch animation speed is set to 2 blinks per second
-  // velocidade da animação de captura é setada para 2 pisques por segundo
   blinkSpeed = 500;
 
+  // the player starts with 3 lives
+  // o jogador começa com 3 vidas
   lives = 3;
   newLives = lives;
+
+  // the lives limit is set to the amount of lives the player starts with
+  // o limite de vidas é definida para a quantidade de vidas com a qual o jogador começa 
   lifeLimit = lives;
 
-  blinkLivesSpeed = 500;
+  // the lives blink animation is updated every half second
+  // a animação de pisque das vidas é atualizada a cada meio segundo
+  blinkLivesSpeed = 500/2.0;
 
   // this function makes the LEDs turn off if the application gets closed
   // esta função faz com que todos os LEDs desliguem ao fechar do programa
   prepareExitHandler();
 
+  // the mouse cursor won't be displayed
+  // o cursor do mouse não será exibido
   noCursor();
 }
 
