@@ -23,7 +23,7 @@ Bop It! Pi is a game made for the [Raspberry Pi](https://www.raspberrypi.org/), 
 <div id="playit">
 
 ### How to play it
-The game consists on trying to get the greatest score you can without losing your lives on doing it. The LEDs will flash like a ball bouncing from side to side. You need to press two keys on your keyboard or press both of the connected push buttons to catch it. The yellow and red LEDs make you lose a heart, while the blue LED (the one in the center) recovers one. The score you get for each catch also depends on the color of the LED where the "ball" stops on. Ideas for a new game mechanic? You can show it to me [here](https://github.com/joogps/Bop-It-Pi/issues)!
+The game consists on trying to get the greatest score you can without losing your lives on doing it. The LEDs will flash like a ball bouncing from side to side. You need to press two keys on your keyboard or press both of the connected push buttons to catch it. The yellow and red LEDs make you lose a heart, while the blue LED (the one in the center) recovers one. The score you get for each catch also depends on the color of the LED where the "ball" stops on. Ideas for a new game mechanic? Questions? You can report them to me [here](https://github.com/joogps/Bop-It-Pi/issues)!
 
 </div>
 
@@ -68,7 +68,7 @@ _Circuit images made with [Fritzing](http://fritzing.org/home/)_
 			<li>GPIO25 (pin 22)</li>
 		</ul> </td> <td><a href="Circuit/Step6.png"><img src="Circuit/Step6.png" alt="Explanatory image for step 6"></img></a> </td> </tr>
 	<tr> <td> <b>6.</b>  Once you have the Processing code on your computer, make sure you've <a href="https://pi.processing.org/download/">installed Processing for Pi</a> and run the files for the game itself. Alternatively, if you don't want to edit the code anytime soon, you can run the exported application available <a href="https://github.com/joogps/Bop-It-Pi/tree/master/Game/application.linux-armv6hf">here</a> without needing to install Processing itself. </td> <td><a href="Circuit/Step7.png"><img src="Circuit/Step7.png" alt="Processing for Pi download page"></img></a> </td> </tr>
-	<tr> <td colspan="2"> <b>7.</b> It's done! Congratulations you did it! I hope you enjoy it! Feel free to <a href="https://github.com/joogps/Bop-It-Pi/issues/new">make a question</a> and to help me develop this project even more! If you need help playing the game, check out the <a href="#playit">how to play paragraph</a>! </td> </tr>
+	<tr> <td colspan="2"> <b>7.</b> It's done! Congratulations, you did it! I hope you enjoy it! Feel free to <a href="https://github.com/joogps/Bop-It-Pi/issues/new">make a question</a> and to help me develop this project even more! If you need help playing the game, check out the <a href="#playit">how to play section</a>! </td> </tr>
 </table>
 
 </div>
@@ -81,7 +81,7 @@ _Circuit images made with [Fritzing](http://fritzing.org/home/)_
 
 ### Índice
 * [O jogo](#pt-game)
-* [COmo jogar](#pt-playit)
+* [Como jogar](#pt-playit)
 * [O que você vai precisar](#pt-materials)
 * [Como montar](#pt-buildit)
 
@@ -95,7 +95,7 @@ Bop-It! Pi é um jogo feito para o [Raspberry Pi](https://www.raspberrypi.org/),
 <div id="pt-playit">
 	
 ### Como jogar
-O jogo consiste em conseguir a melhor pontuação que você puder sem perder nenhuma vida ao fazê-lo. Os LEDs irão piscar como uma bola quicando de um lado para o outro. Você deve pressionar uma tecla em seu teclado para pegá-la. Os LEDs vermelhos e amarelos te fazem perder um coração, enquanto o LED azul (o do centro) te faz recuperar um (a não ser que você esteja com todos os 3). A pontuação que você consegue a cada rodada também depende do LED onde a "bola" para. Ideais para uma nova mecânica de jogo? Me mostre-a [aqui](https://github.com/joogps/Bop-It-Pi/issues)!
+O jogo consiste em conseguir a melhor pontuação que você puder sem perder nenhuma vida ao fazê-lo. Os LEDs irão piscar como uma bola quicando de um lado para o outro. Você deve pressionar duas teclas simultaneamente em seu teclado para pegá-la. Os LEDs vermelhos e amarelos te fazem perder um coração, enquanto o LED azul (o do centro) te faz recuperar um (a não ser que você esteja com todos os 3). A pontuação que você consegue a cada rodada também depende do LED onde a "bola" para. Ideias para uma nova mecânica de jogo? Dúvidas? Me mostre-as [aqui](https://github.com/joogps/Bop-It-Pi/issues)!
 
 </div>
 
@@ -139,7 +139,7 @@ __\*\*__ Os LEDs não precisam, necessariamente, ser vermelhos, verdes, amarelos
 			<li>GPIO25 (pino 22)</li>
 		</ul> </td> <td><a href="Circuit/Step6.png"><img src="Circuit/Step6.png" alt="Imagem explicatória do passo 6"></img></a> </td> </tr>
 	<tr> <td> <b>6.</b> Assim que você tiver o código em Processing no seu computador, certfique-se de que você tem o <a href="https://pi.processing.org/download/">Processing for Pi instalado</a> e execute os arquivos do jogo. Caso você não queira editar o código provido pelo repositório posteriormente, você pode simplesmente executar a aplicação exportada disponível <a href="https://github.com/joogps/Bop-It-Pi/tree/master/Game/application.linux-armv6hf">aqui</a> sem ter que instalar o Processing em si. </td> <td><a href="Circuit/Step7.png"><img src="Circuit/Step7.png" alt="Página de download do Processing for Pi"></img></a> </td> </tr>
-	<tr> <td colspan="2"> <b>7.</b> Está pronto! Parabéns, você conseguiu! Espero que você aproveite muito! Sinta-se livre para <a href="https://github.com/joogps/Bop-It-Pi/issues/new">fazer perguntas ou reportar problemas</a> e me ajudar a desenvolver ainda mais esse projeto! </td> </tr>
+	<tr> <td colspan="2"> <b>7.</b> Está pronto! Parabéns, você conseguiu! Espero que você aproveite muito! Sinta-se livre para <a href="https://github.com/joogps/Bop-It-Pi/issues/new">fazer perguntas ou reportar problemas</a> e me ajudar a desenvolver ainda mais esse projeto! Se você precisa de ajuda sobre a jogabilidade, visite a <a href="#pt-playit">seção como jogar</a>! </td> </tr>
 </table>
 
 </div>
