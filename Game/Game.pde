@@ -118,17 +118,17 @@ void draw() {
         blinkMillisOffset = millis();
       }
     } else if (blinkLives+1 > 0) {
-      lives = newLives;
+      int blinkIndex = newLives-max(leds[currentLED].livesChange, 0);
 
-      int blinkIndex = lives-max(leds[currentLED].livesChange, 0);
-
-      if (blinkLives >= 3) {
+      if (lives != newLives) {
         for (int i = 0; i < leds.length; i++) {
           if (i < blinkIndex)
             leds[i].on();
           else
             leds[i].off();
         }
+
+        lives = newLives;
       }
 
       if (millis()-blinkLivesMillisOffset > blinkLivesSpeed) {
