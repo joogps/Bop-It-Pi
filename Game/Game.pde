@@ -50,7 +50,7 @@ int blinkMillisOffset;
 
 // speed of the blink animation
 // velocidade da animação de pisque
-int blinkSpeed;
+float blinkSpeed;
 
 // store the player's lives
 // guardam as vidas do usuário
@@ -71,7 +71,7 @@ int blinkLivesMillisOffset;
 
 // speed of the lives blink animation
 // velocidade da animação de pisque das vidas
-int blinkLivesSpeed;
+float blinkLivesSpeed;
 
 void setup() {
   // the sketch will run in full screen mode
