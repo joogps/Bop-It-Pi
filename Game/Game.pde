@@ -74,9 +74,9 @@ int blinkLivesMillisOffset;
 float blinkLivesSpeed;
 
 void setup() {
-  // the sketch will run in full screen mode
-  // o sketch vai rodar em modo tela cheia
-  fullScreen();
+  // the sketch will run in a 900x400 resolution
+  // o sketch vai rodar em uma resolução de 900x400
+  size(900, 400);
 
   // here's where you can add, edit or remove LEDs from the leds array
   // the first parameter specifies the GPIO pin the LED is connected to, the second one specifies the value of it and the third one specifies how many lives it will give the player
