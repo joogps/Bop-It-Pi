@@ -30,6 +30,9 @@ int blinkMillisOffset;
 int blinkSpeed;
 
 int lives;
+int newLives;
+int lifeLimit;
+
 int blinkLives;
 int blinkLivesMillisOffset;
 int blinkLivesSpeed;
@@ -72,7 +75,7 @@ void setup() {
 
   // speed is set to 5 LEDs per second
   // velocidade é setada para 5 LEDs por segundo
-  speed = 1000/5.0;
+  speed = 1000/2.0;
 
   // direction is randomly set. the extra code avoids the program to use an invalid index on the leds array
   // direcao setada aleatoriamente. o código extra impede que o programa use um índice inválido no array leds
@@ -87,6 +90,8 @@ void setup() {
   blinkSpeed = 500;
 
   lives = 3;
+  newLives = lives;
+  lifeLimit = lives;
 
   blinkLivesSpeed = 500;
 
@@ -101,20 +106,6 @@ void draw() {
   background(0);
 
   if (lives > 0 || blink+1 > 0 || blinkLives+1 > 0) {
-    fill(255);
-    textAlign(LEFT, TOP);
-    textSize(1);
-    textSize(min(width*4/5.0/textWidth(str(round(score))), height/2.0));
-    text(round(score), width/5.0, height/8.0-textDescent()/2.0);
-
-    score = lerp(score, goalScore, 0.2);
-
-    float size = min(width/10.0, height/10.0);
-    fill(255, 0, 0);
-    noStroke();
-    for (int l = 0; l < lives+(((blinkLives+1 > 0 && leds[lives].state() == 1) || blink+1 > 0) ? 1 : 0); l++)
-      ellipse(width*7/32.0+size/2.0+l*size*1.2, height*7/8.0-textDescent()/2.0-size/2, size, size);
-
     if (blink+1 > 0) {
       if (millis()-blinkMillisOffset > blinkSpeed) {
         if (leds[currentLED].state() == 1) {
@@ -127,9 +118,13 @@ void draw() {
         blinkMillisOffset = millis();
       }
     } else if (blinkLives+1 > 0) {
-      if (blinkLives >= lives+1) {
+      lives = newLives;
+
+      int blinkIndex = lives-max(leds[currentLED].livesChange, 0);
+
+      if (blinkLives >= 3) {
         for (int i = 0; i < leds.length; i++) {
-          if (i < lives)
+          if (i < blinkIndex)
             leds[i].on();
           else
             leds[i].off();
@@ -137,10 +132,10 @@ void draw() {
       }
 
       if (millis()-blinkLivesMillisOffset > blinkLivesSpeed) {
-        if (leds[lives].state() == 1)
-          leds[lives].off();
+        if (leds[blinkIndex].state() == 1)
+          leds[blinkIndex].off();
         else {
-          leds[lives].on();
+          leds[blinkIndex].on();
           blinkLives--;
         }
 
@@ -179,21 +174,36 @@ void draw() {
       blink = 3;
       goalScore+= leds[currentLED].value;
 
-      speed*= 1.1;
+      speed/= 1.1;
 
-      if ((leds[currentLED].livesChange == 1 && lives < 3) || leds[currentLED].livesChange == -1) {
-        lives+= leds[currentLED].livesChange;
+      if ((leds[currentLED].livesChange == 1 && lives < lifeLimit) || leds[currentLED].livesChange == -1) {
+        newLives+= leds[currentLED].livesChange;
 
         if (lives < leds.length)
-          blinkLives = lives+2;
-      }
+          blinkLives = 3;
 
-      if (lives == 0)
-        for (int i = 0; i < leds.length; i++)
-          leds[i].exit();
+        if (newLives == 0)
+          for (int i = 0; i < leds.length; i++)
+            leds[i].exit();
+      }
 
       canCatch = false;
     }
+
+    fill(255);
+    textAlign(LEFT, TOP);
+    textSize(1);
+    textSize(min(width*4/5.0/textWidth(str(round(score))), height/2.0));
+    text(round(score), width/5.0, height/8.0-textDescent()/2.0);
+
+    score = lerp(score, goalScore, 0.2);
+
+    float size = min(width/10.0, height/10.0);
+    fill(255, 0, 0);
+    noStroke();
+    for (int l = 0; l < lifeLimit; l++)
+      if (((blinkLives+1 <= 0 || blink+1 > 0) && l < lives) || (blinkLives+1 > 0 && blink+1 <= 0 && (l < lives-max(leds[currentLED].livesChange, 0) || leds[l].state() == 1)))
+        ellipse(width*7/32.0+size/2.0+l*size*1.2, height*7/8.0-textDescent()/2.0-size/2, size, size);
   } else {
     fill(255);
     textAlign(CENTER, CENTER);
