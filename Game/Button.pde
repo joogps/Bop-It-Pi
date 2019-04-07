@@ -3,7 +3,7 @@ class Button {
 
   Button (int p) {
     GPIOPin = p;
-    GPIO.pinMode(GPIOPin, GPIO.INPUT);
+    GPIO.pinMode(GPIOPin, GPIO.INPUT_PULLDOWN);
   }
 
   // retorna o estado atual do botão
