@@ -87,5 +87,5 @@ Abaixo está um tutorial mostrando como colocá-los no seu circuito.
 
 </div>
 
-### [Back to top / Voltar ao início](#page)
+### [Voltar ao início](#page)
 </div>

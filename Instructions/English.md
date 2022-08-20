@@ -84,5 +84,5 @@ If you want to, you can use push buttons instead of keys to play the game. Below
 
 </div>
 
-### [Back to top / Voltar ao início](#page)
+### [Back to top](#page)
 </div>
