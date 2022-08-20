@@ -1,5 +1,5 @@
 <h1> Bop It! Pi
-  <img align="right" alt="Project logo" src="../Instructions/Logo.png" height=74px>
+  <img align="right" alt="Project logo" src="Instructions/Logo.png" height=74px>
 </h1>
 
 > **Note**
